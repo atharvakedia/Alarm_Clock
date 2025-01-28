@@ -1,14 +1,15 @@
 # Alarm Clock
 
 ## Overview
-This project focuses on designing, implementing, and simulating an ** Alarm Clock** using Digital Logic. The Babylonian Clock displays a 24-hour time format using two seven-segment displays for hours and minutes.
+This project involves designing, implementing, and simulating a **Conventional Alarm Clock** using Verilog. The design includes timekeeping, an alarm system, and seven-segment display integration.
 
 ---
 
-## Pins Table
+## Module Specifications
 
-The **ConventionalAlarmClock** module should include the following ports:
+### ConventionalAlarmClock Module
 
+#### **Ports Table**
 | **Port Direction** | **Port Name**      | **Active** | **Port Width (bits)** | **Description** |
 |--------------------|-------------------|------------|----------------------|----------------|
 | **INPUT**         | `CLK`              | Rising     | 1                    | Clock input used for the alarm clock |
@@ -28,23 +29,43 @@ The **ConventionalAlarmClock** module should include the following ports:
 | **OUTPUT**        | `SEG_MINUTES`      | -          | 14                   | Seven-segment signal for the minutes the alarm clock has displayed |
 | **OUTPUT**        | `SEG_HOURS`        | -          | 14                   | Seven-segment signal for the hours the alarm clock has displayed |
 
----
+---d
+### ConventionalAlarmClock Module
 
-## Provided Components
-Below is a summary of the components provided in this lab. For detailed information, refer to the [Provided Components Documentation](https://cse140l.github.io/fa24-labs/docs/lab1/part1/provided_components.html).
----
+### **BabylonianClock**
+This embedded module serves as the primary clock component that keeps track of time.
 
-## Task Breakdown
-
-### 1. Clock Implementation
-- Instantiate the **BabylonianClock** module for timekeeping.
-- Implement **increment logic** for `MIN_ADV` and `HR_ADV`.
-
-### 2. Alarm Functionality
-- Compare current time (`HOURS`, `MINUTES`) with `ALARM_HOURS` and `ALARM_MINUTES`.
-- Activate `BUZZ` output when the alarm is reached.
-
-### 3. Display Output
-- Use **SevenSegmentDecoder** for `SEG_SECONDS`, `SEG_MINUTES`, and `SEG_HOURS`.
+| **Port Direction** | **Port Name** | **Active** | **Port Width (bits)** | **Description** |
+|--------------------|--------------|------------|----------------------|----------------|
+| **INPUT**         | `CLK`         | Rising     | 1                    | Clock input used for the alarm clock |
+| **INPUT**         | `CLR`         | High       | 1                    | Resets the alarm clock |
+| **INPUT**         | `SETUP`       | High       | 1                    | Allows the user to set the time using `MIN_ADV` and `HR_ADV` |
+| **INPUT**         | `MIN_ADV`     | High       | 1                    | Increments the minute signal when `SETUP` signals are active |
+| **INPUT**         | `HR_ADV`      | High       | 1                    | Increments the hour signal when `SETUP` signals are active |
+| **OUTPUT**        | `SECONDS`     | -          | 6                    | The current seconds the alarm clock has stored |
+| **OUTPUT**        | `MINUTES`     | -          | 6                    | The current minutes the alarm clock has stored |
+| **OUTPUT**        | `HOURS`       | -          | 5                    | The current hours the alarm clock has stored |
 
 ---
+
+### **BabylonianAlarm**
+This embedded module manages the alarm functionality for the clock.
+
+| **Port Direction** | **Port Name** | **Active** | **Port Width (bits)** | **Description** |
+|--------------------|--------------|------------|----------------------|----------------|
+| **INPUT**         | `CLR`         | High       | 1                    | Resets the alarm clock |
+| **INPUT**         | `SETUP`       | High       | 1                    | Allows the user to set the time using `MIN_ADV` and `HR_ADV` |
+| **INPUT**         | `MIN_ADV`     | High       | 1                    | Increments the minute signal when `SETUP` signals are active |
+| **INPUT**         | `HR_ADV`      | High       | 1                    | Increments the hour signal when `SETUP` signals are active |
+| **OUTPUT**        | `MINUTES`     | -          | 6                    | The current minutes the alarm clock has stored |
+| **OUTPUT**        | `HOURS`       | -          | 5                    | The current hours the alarm clock has stored |
+
+---
+
+### **SevenSegmentDecoder**
+This embedded module is responsible for decoding binary time values into seven-segment display signals.
+
+| **Port Direction** | **Port Name** | **Active** | **Port Width (bits)** | **Description** |
+|--------------------|--------------|------------|----------------------|----------------|
+| **INPUT**         | `DATA_IN`     | -          | 7                    | 7-bit unsigned integer number to get decoded into 2 digits |
+| **OUTPUT**        | `DATA_OUT`    | -          | 14                   | Output of the decoder (do not include actual displays in your circuit) |
