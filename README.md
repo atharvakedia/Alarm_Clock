@@ -29,8 +29,8 @@ This project involves designing, implementing, and simulating a **Conventional A
 | **OUTPUT**        | `SEG_MINUTES`      | -          | 14                   | Seven-segment signal for the minutes the alarm clock has displayed |
 | **OUTPUT**        | `SEG_HOURS`        | -          | 14                   | Seven-segment signal for the hours the alarm clock has displayed |
 
----d
-### ConventionalAlarmClock Module
+---
+### Embedded Modules
 
 ### **BabylonianClock**
 This embedded module serves as the primary clock component that keeps track of time.
